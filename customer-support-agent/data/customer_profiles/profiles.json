@@ -1,0 +1,26 @@
+[
+  {
+    "customer_id": "CUST-12345",
+    "name": "John Smith",
+    "tier": "premium",
+    "previous_tickets": 3,
+    "satisfaction_score": 4.2,
+    "technical_level": "intermediate"
+  },
+  {
+    "customer_id": "CUST-12346",
+    "name": "Sarah Johnson",
+    "tier": "professional",
+    "previous_tickets": 1,
+    "satisfaction_score": 4.8,
+    "technical_level": "basic"
+  },
+  {
+    "customer_id": "CUST-12347",
+    "name": "Mike Wilson",
+    "tier": "enterprise",
+    "previous_tickets": 8,
+    "satisfaction_score": 3.9,
+    "technical_level": "advanced"
+  }
+]

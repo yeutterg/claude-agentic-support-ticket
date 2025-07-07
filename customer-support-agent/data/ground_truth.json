@@ -1,0 +1,16 @@
+[
+  {
+    "ticket_id": "TICKET-20250706-1001",
+    "expected_category": "technical",
+    "expected_priority": "high",
+    "expected_sentiment": "negative",
+    "requires_escalation": false
+  },
+  {
+    "ticket_id": "TICKET-20250706-1002",
+    "expected_category": "billing",
+    "expected_priority": "medium",
+    "expected_sentiment": "neutral",
+    "requires_escalation": false
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "article_id": "KB-001",
+    "title": "Resolving E401 Authentication Errors",
+    "content": "This error typically occurs when authentication tokens expire or become invalid.\n\nSolution Steps:\n1. Clear your browser cache and cookies\n2. Log out completely and log back in\n3. Check if your account is active and not suspended\n4. Verify your email address is confirmed\n5. Try resetting your password if the issue persists\n6. Disable browser extensions that might interfere\n7. Try a different browser or incognito mode\n\nIf the error continues, your account may need manual reset by our support team.",
+    "category": "troubleshooting",
+    "tags": [
+      "authentication",
+      "login",
+      "E401",
+      "error"
+    ]
+  },
+  {
+    "article_id": "KB-002",
+    "title": "Understanding Your Billing Statement",
+    "content": "Your billing statement includes several components:\n\n1. Subscription Charges: Base monthly/annual fee for your plan\n2. Usage Charges: Additional costs based on usage beyond plan limits\n3. Add-ons: Optional features or increased limits\n4. Taxes: Applied based on your location\n5. Credits: Any discounts or refunds applied\n\nCommon billing issues:\n- Charges appear after cancellation: Usually prorated charges from the final billing period\n- Duplicate charges: May be authorization holds that will be released\n- Unexpected amounts: Check if you exceeded plan limits or had plan changes\n\nFor billing disputes, provide your invoice number and specific charge details.",
+    "category": "billing",
+    "tags": [
+      "billing",
+      "charges",
+      "invoice",
+      "payment"
+    ]
+  },
+  {
+    "article_id": "KB-003",
+    "title": "Performance Optimization Guide",
+    "content": "If you're experiencing slow performance, follow these steps:\n\n1. System Requirements Check:\n   - Ensure your system meets minimum requirements\n   - Update to the latest version of the software\n   - Check available disk space (minimum 10GB recommended)\n\n2. Network Optimization:\n   - Test your internet speed (minimum 10 Mbps recommended)\n   - Use wired connection instead of WiFi when possible\n   - Check firewall settings for blocked ports\n\n3. Application Settings:\n   - Reduce cache size in settings\n   - Disable unnecessary features\n   - Lower quality settings for better performance\n\n4. Regular Maintenance:\n   - Clear cache weekly\n   - Restart application daily\n   - Update drivers and OS regularly",
+    "category": "performance",
+    "tags": [
+      "performance",
+      "slow",
+      "optimization",
+      "speed"
+    ]
+  }
+]

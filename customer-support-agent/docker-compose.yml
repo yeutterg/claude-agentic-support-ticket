@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  customer-support-agent:
+    build: .
+    container_name: customer-support-agent
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PROMPTLAYER_API_KEY=${PROMPTLAYER_API_KEY:-}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - USE_MOCK_DATA=${USE_MOCK_DATA:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      # Mount data directory for persistence
+      - ./data:/app/data
+      # Mount .env file if it exists
+      - ./.env:/app/.env:ro
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  # Optional: Add a development service for interactive development
+  customer-support-agent-dev:
+    build: .
+    container_name: customer-support-agent-dev
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PROMPTLAYER_API_KEY=${PROMPTLAYER_API_KEY:-}
+      - ENVIRONMENT=development
+      - USE_MOCK_DATA=true
+      - LOG_LEVEL=DEBUG
+    volumes:
+      # Mount entire project for development
+      - .:/app
+    ports:
+      - "8001:8000"
+    command: ["python", "example_usage.py"]
+    profiles:
+      - dev

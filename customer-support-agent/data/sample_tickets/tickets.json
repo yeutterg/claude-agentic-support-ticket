@@ -1,0 +1,29 @@
+[
+  {
+    "ticket_id": "TICKET-20250706-1001",
+    "subject": "Can't log into my account",
+    "body": "I've been trying to log in for the past hour but keep getting error code E401. I've tried resetting my password twice. This is really frustrating as I need to access my invoices for tax purposes. Please help ASAP!",
+    "category": "technical",
+    "timestamp": "2025-07-05T23:44:07.402293",
+    "customer_id": "CUST-12345",
+    "product_version": "v2.3.1"
+  },
+  {
+    "ticket_id": "TICKET-20250706-1002",
+    "subject": "Unexpected charge on my account",
+    "body": "I noticed a charge of $99.99 on my January statement for CloudSync Pro. I don't remember authorizing this. My account shows active subscription. Can you please explain this charge and provide details?",
+    "category": "billing",
+    "timestamp": "2025-07-05T23:44:07.402329",
+    "customer_id": "CUST-12346",
+    "product_version": "v2.2.5"
+  },
+  {
+    "ticket_id": "TICKET-20250706-1003",
+    "subject": "DataVault Enterprise is running extremely slow",
+    "body": "For the past 3 days, DataVault Enterprise has been loading very slowly. I've tried restarting but nothing works. Error code E500 keeps appearing. This is affecting my entire team's productivity. System specs: Windows 11, 16GB RAM",
+    "category": "technical",
+    "timestamp": "2025-07-05T23:44:07.402331",
+    "customer_id": "CUST-12347",
+    "product_version": "v3.1.0"
+  }
+]
