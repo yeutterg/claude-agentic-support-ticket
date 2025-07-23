@@ -161,6 +161,12 @@ Provide a JSON response with:
                 related_issues=result_dict.get('related_issues', [])
             )
             
+        except anthropic.NotFoundError as e:
+            if "model" in str(e) and "not_found_error" in str(e):
+                print("The specified Anthropic model was not found or is unavailable. Please check your model name or account access.")
+                return None
+            else:
+                raise
         except anthropic.BadRequestError as e:
             if "credit balance is too low" in str(e):
                 print("Your Anthropic API credit balance is too low. Please add credits or enable mock mode in your .env file.")

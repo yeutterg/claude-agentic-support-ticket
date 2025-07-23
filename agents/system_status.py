@@ -51,7 +51,7 @@ class SystemStatusResult:
 
 
 class SystemStatusAgent:
-    def __init__(self, api_key: str, model: str = "claude-3-haiku-20240307", api_endpoints: Optional[Dict] = None):
+    def __init__(self, api_key: str, model: str = "claude-3-sonnet-20240229", api_endpoints: Optional[Dict] = None):
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
         self.temperature = 0.1
@@ -182,6 +182,12 @@ Determine the system status and extract relevant information."""
                 known_issues=result_dict.get('known_issues', [])
             )
             
+        except anthropic.NotFoundError as e:
+            if "model" in str(e) and "not_found_error" in str(e):
+                print("The specified Anthropic model was not found or is unavailable. Please check your model name or account access.")
+                return None
+            else:
+                raise
         except anthropic.BadRequestError as e:
             if "credit balance is too low" in str(e):
                 print("Your Anthropic API credit balance is too low. Please add credits or enable mock mode in your .env file.")

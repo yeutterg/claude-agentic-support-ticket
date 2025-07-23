@@ -165,9 +165,9 @@ class RegressionTester:
 class CostCalculator:
     def __init__(self, model_costs: Optional[Dict[str, float]] = None):
         self.model_costs = model_costs or {
-            "claude-3-opus-20240229": {"input": 0.015, "output": 0.075},
-            "claude-3-sonnet-20240229": {"input": 0.003, "output": 0.015},
-            "claude-3-haiku-20240307": {"input": 0.00025, "output": 0.00125}
+            "claude-opus-4-20250514": {"input": 0.015, "output": 0.075},
+            "claude-sonnet-4-20250514": {"input": 0.003, "output": 0.015},
+            "claude-haiku-4-20250514": {"input": 0.00025, "output": 0.00125}
         }
         
     def calculate_agent_cost(self, agent_name: str, model: str, 

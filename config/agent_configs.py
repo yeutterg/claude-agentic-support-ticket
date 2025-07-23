@@ -3,7 +3,7 @@ from typing import Dict, Any
 
 class AgentConfig:
     TICKET_ANALYZER = {
-        "model": "claude-3-opus-20240229",
+        "model": "claude-sonnet-4-20250514",
         "temperature": 0.2,
         "max_tokens": 1000,
         "retry_attempts": 3,
@@ -11,7 +11,7 @@ class AgentConfig:
     }
     
     KNOWLEDGE_RETRIEVAL = {
-        "model": "claude-3-sonnet-20240229",
+        "model": "claude-sonnet-4-20250514",
         "temperature": 0.3,
         "max_tokens": 1500,
         "embedding_model": "all-MiniLM-L6-v2",
@@ -20,7 +20,7 @@ class AgentConfig:
     }
     
     SYSTEM_STATUS = {
-        "model": "claude-3-haiku-20240307",
+        "model": "claude-haiku-4-20250514",
         "temperature": 0.1,
         "max_tokens": 1000,
         "api_timeout": 10,
@@ -28,7 +28,7 @@ class AgentConfig:
     }
     
     RESPONSE_SYNTHESIS = {
-        "model": "claude-3-opus-20240229",
+        "model": "claude-sonnet-4-20250514",
         "temperature": 0.7,
         "max_tokens": 1500,
         "tone_mapping": {
@@ -69,8 +69,8 @@ class EvaluationConfig:
     
     AB_TEST_PARAMETERS = {
         "models": {
-            "A": "claude-3-opus-20240229",
-            "B": "claude-3-sonnet-20240229"
+            "A": "claude-sonnet-4-20250514",
+            "B": "claude-haiku-4-20250514"
         },
         "temperatures": {
             "A": 0.7,
