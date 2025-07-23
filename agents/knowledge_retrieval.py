@@ -49,7 +49,7 @@ class KnowledgeRetrievalResult:
 
 
 class KnowledgeRetrievalAgent:
-    def __init__(self, api_key: str, model: str = "claude-3-sonnet-20240229"):
+    def __init__(self, api_key: str, model: str = "claude-sonnet-4-20250514"):
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
         self.temperature = 0.3
@@ -140,8 +140,32 @@ Provide a JSON response with:
                 system=self._create_system_prompt(),
                 messages=[{"role": "user", "content": prompt}]
             )
-            
-            result_dict = json.loads(response.content[0].text)
+
+            # Robust response handling for Claude 4
+            if hasattr(response, "stop_reason") and response.stop_reason == "refusal":
+                print(f"Claude refused to answer for model '{self.model}'.")
+                return None
+            if not hasattr(response, "content") or not response.content or not hasattr(response.content[0], "text"):
+                print(f"Empty or malformed response from Anthropic for model '{self.model}': {response}")
+                return None
+            try:
+                result_dict = json.loads(response.content[0].text)
+            except Exception as e:
+                # Try to strip code block markers and parse again
+                raw = response.content[0].text if response.content and hasattr(response.content[0], 'text') else response
+                if isinstance(raw, str) and raw.strip().startswith('```'):
+                    print("Anthropic response wrapped in code block, attempting to strip and parse again...")
+                    import re
+                    cleaned = re.sub(r'^```[a-zA-Z]*\\n?', '', raw.strip())
+                    cleaned = re.sub(r'```$', '', cleaned).strip()
+                    try:
+                        result_dict = json.loads(cleaned)
+                    except Exception as e2:
+                        print(f"Could not parse JSON from Anthropic response for model '{self.model}' even after stripping code block. Raw response: {raw}")
+                        return None
+                else:
+                    print(f"Could not parse JSON from Anthropic response for model '{self.model}'. Raw response: {raw}")
+                    return None
             
             retrieval_results = []
             for i, (article, score) in enumerate(similar_articles[:3]):
@@ -163,7 +187,7 @@ Provide a JSON response with:
             
         except anthropic.NotFoundError as e:
             if "model" in str(e) and "not_found_error" in str(e):
-                print("The specified Anthropic model was not found or is unavailable. Please check your model name or account access.")
+                print(f"The specified Anthropic model '{self.model}' was not found or is unavailable. Please check your model name or account access.")
                 return None
             else:
                 raise
@@ -174,4 +198,5 @@ Provide a JSON response with:
             else:
                 raise
         except Exception as e:
-            raise Exception(f"Failed to retrieve knowledge: {str(e)}")
+            print(f"Failed to retrieve knowledge: {str(e)}")
+            return None

@@ -31,6 +31,10 @@ def basic_example():
     
     result = pipeline.process_ticket_sync(ticket)
     
+    if result is None:
+        print("Ticket processing failed. Cannot display results.")
+        return
+    
     print("Analysis Results:")
     print(f"- Category: {result['analysis']['category']}")
     print(f"- Priority: {result['analysis']['priority']}")
@@ -67,14 +71,23 @@ def batch_processing_example():
     for i, ticket in enumerate(tickets):
         print(f"Processing ticket {i+1}/5: {ticket['subject'][:50]}...")
         result = pipeline.process_ticket_sync(ticket)
+        
+        if result is None:
+            print(f"  Ticket {i+1} processing failed, skipping...")
+            continue
+            
         results.append(result)
         
         categories.append(result['analysis']['category'])
         priorities.append(result['analysis']['priority'])
         processing_times.append(result['processing_time_seconds'])
     
+    if not results:
+        print("No tickets were processed successfully.")
+        return
+        
     print("\n=== BATCH SUMMARY ===")
-    print(f"Total tickets processed: {len(tickets)}")
+    print(f"Total tickets processed: {len(results)}")
     print(f"Average processing time: {sum(processing_times)/len(processing_times):.2f} seconds")
     print(f"Categories: {dict((c, categories.count(c)) for c in set(categories))}")
     print(f"Priorities: {dict((p, priorities.count(p)) for p in set(priorities))}")

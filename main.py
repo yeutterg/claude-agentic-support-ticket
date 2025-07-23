@@ -90,6 +90,9 @@ class CustomerSupportPipeline:
         
         print("Step 1: Analyzing ticket...")
         analysis = self.ticket_analyzer.analyze_ticket(ticket_text, ticket_metadata)
+        if analysis is None:
+            print("Ticket analysis failed. Skipping ticket processing.")
+            return None
         analysis_dict = analysis.to_dict()
         print(f"  Category: {analysis_dict['category']}")
         print(f"  Priority: {analysis_dict['priority']}")
@@ -97,6 +100,9 @@ class CustomerSupportPipeline:
         
         print("\nStep 2: Retrieving relevant knowledge...")
         knowledge_results = self.knowledge_retrieval.retrieve_knowledge(analysis_dict)
+        if knowledge_results is None:
+            print("Knowledge retrieval failed. Skipping ticket processing.")
+            return None
         knowledge_dict = knowledge_results.to_dict()
         print(f"  Found {len(knowledge_dict['relevant_articles'])} relevant articles")
         
@@ -105,6 +111,9 @@ class CustomerSupportPipeline:
             analysis_dict.get("mentioned_products", []),
             analysis_dict.get("error_codes", [])
         )
+        if status_results is None:
+            print("System status check failed. Skipping ticket processing.")
+            return None
         status_dict = status_results.to_dict()
         print(f"  System Status: {status_dict['system_status']['overall']}")
         
@@ -116,6 +125,9 @@ class CustomerSupportPipeline:
             status_dict,
             customer_profile
         )
+        if response is None:
+            print("Response synthesis failed. Skipping ticket processing.")
+            return None
         response_dict = response.to_dict()
         print(f"  Confidence Score: {response_dict['confidence_score']:.2f}")
         print(f"  Escalation Needed: {response_dict['escalation_needed']}")
