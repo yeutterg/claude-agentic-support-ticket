@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Service to run all test cases
+  test-all:
+    build: .
+    container_name: customer-support-test-all
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PROMPTLAYER_API_KEY=${PROMPTLAYER_API_KEY:-}
+      - ENVIRONMENT=testing
+      - USE_MOCK_DATA=${USE_MOCK_DATA:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./data:/app/data
+      - ./.env:/app/.env:ro
+    command: ["python", "test_all_cases.py"]
+    profiles:
+      - test-all
+
+  # Service to run single test case
+  test-single:
+    build: .
+    container_name: customer-support-test-single
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PROMPTLAYER_API_KEY=${PROMPTLAYER_API_KEY:-}
+      - ENVIRONMENT=testing
+      - USE_MOCK_DATA=${USE_MOCK_DATA:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./data:/app/data
+      - ./.env:/app/.env:ro
+    # Command will be overridden when running
+    command: ["echo", "Please specify a test case number"]
+    profiles:
+      - test-single
+
+  # Interactive test environment
+  test-interactive:
+    build: .
+    container_name: customer-support-test-interactive
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PROMPTLAYER_API_KEY=${PROMPTLAYER_API_KEY:-}
+      - ENVIRONMENT=testing
+      - USE_MOCK_DATA=${USE_MOCK_DATA:-true}
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash"]
+    profiles:
+      - interactive

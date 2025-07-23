@@ -1,0 +1,137 @@
+[
+  {
+    "ticket_id": "TEST-001",
+    "subject": "Export button grayed out despite Professional plan",
+    "body": "Hi, I'm trying to export my analytics data from the dashboard but the export button is grayed out. When I hover over it, I see error code E1001. I have a Professional plan which should include this feature. Can you help me access my data?",
+    "category": "technical",
+    "timestamp": "2025-07-23T10:00:00.000000",
+    "customer_id": "CUST-EXPORT",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-002",
+    "subject": "URGENT: Database corrupted - lost all customer data!!!",
+    "body": "THIS IS CRITICAL! Our entire database got corrupted after the latest update. We've lost ALL customer records - over 50,000 entries! Error E9999 everywhere. Our business is at standstill. We're losing $10K per hour. If this isn't fixed TODAY, we'll pursue legal action for damages!",
+    "category": "technical",
+    "timestamp": "2025-07-23T09:30:00.000000",
+    "customer_id": "CUST-CRITICAL",
+    "product_version": "v4.2.0"
+  },
+  {
+    "ticket_id": "TEST-003",
+    "subject": "Double charged for annual subscription",
+    "body": "I was charged twice for my annual CloudSync Pro subscription - $599.99 on Jan 15 and again on Jan 16. Transaction IDs: TXN-2025-1234 and TXN-2025-1235. Please refund the duplicate charge immediately. This is unacceptable.",
+    "category": "billing",
+    "timestamp": "2025-07-23T11:00:00.000000",
+    "customer_id": "CUST-BILLING",
+    "product_version": "v3.8.2"
+  },
+  {
+    "ticket_id": "TEST-004",
+    "subject": "Feature request: Dark mode for mobile app",
+    "body": "Love your product! Would be amazing if you could add dark mode to the mobile app. My eyes would really appreciate it during late night work sessions. Also, it would save battery on OLED screens. Any plans for this?",
+    "category": "feature_request",
+    "timestamp": "2025-07-23T14:00:00.000000",
+    "customer_id": "CUST-FEATURE",
+    "product_version": "mobile-v2.1.0"
+  },
+  {
+    "ticket_id": "TEST-005",
+    "subject": "API rate limiting issues affecting production",
+    "body": "We're experiencing severe API rate limiting (error E429) even though we're well below our tier limits. Our monitoring shows only 500 requests/hour but getting blocked. This is impacting our production environment. Need immediate assistance or workaround.",
+    "category": "technical",
+    "timestamp": "2025-07-23T08:45:00.000000",
+    "customer_id": "CUST-API",
+    "product_version": "api-v2.0"
+  },
+  {
+    "ticket_id": "TEST-006",
+    "subject": "Confused about pricing tiers",
+    "body": "Hi, I'm looking at upgrading from Free to paid plan but the pricing page is confusing. What's the difference between Professional and Business tiers? Do I need Business tier for API access or is Professional enough? Also, is there educational discount?",
+    "category": "billing",
+    "timestamp": "2025-07-23T15:30:00.000000",
+    "customer_id": "CUST-INQUIRY",
+    "product_version": "v4.1.0"
+  },
+  {
+    "ticket_id": "TEST-007",
+    "subject": "Two-factor authentication not working",
+    "body": "I enabled 2FA yesterday but now I can't receive the SMS codes. Tried multiple times. My phone number is correct (+1-555-0123). Without this I'm locked out of my account. Please disable 2FA temporarily so I can access my account.",
+    "category": "technical",
+    "timestamp": "2025-07-23T12:15:00.000000",
+    "customer_id": "CUST-2FA",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-008",
+    "subject": "GDPR data deletion request",
+    "body": "Under GDPR Article 17, I request complete deletion of all my personal data from your systems. This includes account data, logs, backups, and any derived data. Please confirm deletion within 30 days as required by law. My account email: user@example.com",
+    "category": "other",
+    "timestamp": "2025-07-23T16:00:00.000000",
+    "customer_id": "CUST-GDPR",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-009",
+    "subject": "Integration with Slack broken after update",
+    "body": "After updating to v4.2.1, our Slack integration stopped working. Notifications aren't being sent. Already tried reconnecting - getting error E3001. We rely on these notifications for critical alerts. Please provide fix or rollback instructions.",
+    "category": "technical",
+    "timestamp": "2025-07-23T13:00:00.000000",
+    "customer_id": "CUST-INTEGRATION",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-010",
+    "subject": "Incredible support - thank you!",
+    "body": "Just wanted to say THANK YOU to your support team, especially Sarah! She helped me resolve my sync issues yesterday in record time. Your product has transformed our workflow. Keep up the excellent work! 5 stars!",
+    "category": "other",
+    "timestamp": "2025-07-23T17:00:00.000000",
+    "customer_id": "CUST-HAPPY",
+    "product_version": "v4.2.0"
+  },
+  {
+    "ticket_id": "TEST-011",
+    "subject": "Memory leak causing server crashes",
+    "body": "We've identified a memory leak in the DataProcessor module. RAM usage grows to 32GB+ after 48 hours. Error logs show E7500. Already tried garbage collection tuning. Running on Ubuntu 22.04, Java 17. Need patch urgently.",
+    "category": "technical",
+    "timestamp": "2025-07-23T07:30:00.000000",
+    "customer_id": "CUST-MEMORY",
+    "product_version": "v4.1.5"
+  },
+  {
+    "ticket_id": "TEST-012",
+    "subject": "Accessibility issues with screen reader",
+    "body": "I'm visually impaired and use JAWS screen reader. Many buttons in your web app don't have proper ARIA labels, making navigation impossible. This violates ADA compliance. Please prioritize accessibility fixes. Happy to help test improvements.",
+    "category": "technical",
+    "timestamp": "2025-07-23T14:45:00.000000",
+    "customer_id": "CUST-A11Y",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-013",
+    "subject": "Subscription cancellation not processed",
+    "body": "I cancelled my subscription on Dec 28 but was still charged on Jan 15. Cancellation confirmation #CXL-2024-9876. This is the 3rd time I'm contacting about this. If not resolved, I'll dispute with credit card company.",
+    "category": "billing",
+    "timestamp": "2025-07-23T10:30:00.000000",
+    "customer_id": "CUST-CANCEL",
+    "product_version": "v4.0.0"
+  },
+  {
+    "ticket_id": "TEST-014",
+    "subject": "Data sync conflicts between devices",
+    "body": "Getting constant sync conflicts between desktop and mobile. Error E2002. Changes on mobile overwrite desktop work. Lost 3 hours of work yesterday. Tried clearing cache, reinstalling - nothing helps. This is making the app unusable.",
+    "category": "technical",
+    "timestamp": "2025-07-23T11:45:00.000000",
+    "customer_id": "CUST-SYNC",
+    "product_version": "v4.2.1"
+  },
+  {
+    "ticket_id": "TEST-015",
+    "subject": "Performance degradation with large datasets",
+    "body": "App becomes unusably slow with 10K+ records. Queries taking 30+ seconds. Seeing errors E4001, E4002. We're Enterprise customers paying $5K/month - this performance is unacceptable. Considering switching to competitor if not resolved.",
+    "category": "complaint",
+    "timestamp": "2025-07-23T09:00:00.000000",
+    "customer_id": "CUST-PERFORMANCE",
+    "product_version": "v4.2.1"
+  }
+]

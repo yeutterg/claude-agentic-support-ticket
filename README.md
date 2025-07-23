@@ -422,7 +422,101 @@ See `docker-commands.md` for a complete reference.
 
 ## Testing
 
-Run the test suite:
+### Test Suite
+
+The system includes a comprehensive test suite with 15 diverse test cases covering various customer support scenarios:
+
+1. **Export Feature Issue** - Professional plan user can't export data
+2. **Critical Data Loss** - Database corruption with legal threats
+3. **Double Billing** - Duplicate subscription charges
+4. **Feature Request** - Dark mode request (positive sentiment)
+5. **API Rate Limiting** - Production environment issues
+6. **Pricing Inquiry** - Pre-sales questions
+7. **2FA Lockout** - Authentication problems
+8. **GDPR Request** - Legal compliance for data deletion
+9. **Integration Failure** - Slack integration broken
+10. **Positive Feedback** - Happy customer testimonial
+11. **Memory Leak** - Technical deep-dive issue
+12. **Accessibility** - Screen reader compatibility
+13. **Cancellation Issues** - Failed subscription cancellation
+14. **Sync Conflicts** - Multi-device data loss
+15. **Performance Issues** - Enterprise customer complaints
+
+### Running Test Cases with Docker
+
+#### Method 1: Using the Shell Script (Recommended)
+
+```bash
+# Build the Docker image
+./run_tests_docker.sh build
+
+# Run all 15 test cases
+./run_tests_docker.sh all
+
+# Run a single test case (e.g., test case #2)
+./run_tests_docker.sh single 2
+
+# Run the original demo
+./run_tests_docker.sh demo
+```
+
+#### Method 2: Using Docker Compose
+
+```bash
+# Run all test cases
+docker-compose -f docker-compose.test.yml run --rm test-all
+
+# Run a single test case (e.g., test case #5)
+docker-compose -f docker-compose.test.yml run --rm test-single python test_single_case.py 5
+
+# Run interactive shell for debugging
+docker-compose -f docker-compose.test.yml run --rm test-interactive
+```
+
+#### Method 3: Direct Docker Commands
+
+```bash
+# Build the image
+docker build -t customer-support-agent .
+
+# Run all test cases
+docker run --rm --env-file .env -v "$(pwd)/data:/app/data" customer-support-agent python test_all_cases.py
+
+# Run single test case #3
+docker run --rm --env-file .env -v "$(pwd)/data:/app/data" customer-support-agent python test_single_case.py 3
+```
+
+### Running Test Cases Locally
+
+```bash
+# Run all test cases
+python test_all_cases.py
+
+# Run a single test case (e.g., case #7)
+python test_single_case.py 7
+
+# View available test cases
+python test_single_case.py
+```
+
+### Test Results
+
+Test results are saved in:
+- `data/api_responses/test_results.json` - Summary of all test cases
+- `data/api_responses/test_case_X_result.json` - Individual test case results
+
+### Mock Mode Testing
+
+To avoid API costs during testing, set `USE_MOCK_DATA=true` in your `.env` file:
+
+```env
+USE_MOCK_DATA=true
+LOG_LEVEL=DEBUG  # Optional: for detailed output
+```
+
+### Unit Tests
+
+Run the unit test suite:
 ```bash
 # With Docker
 docker-compose run --rm customer-support-agent python -m pytest tests/

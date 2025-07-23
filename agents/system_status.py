@@ -65,14 +65,25 @@ class SystemStatusAgent:
     def _create_system_prompt(self) -> str:
         return """You are a system status analyzer. Parse API responses and extract relevant system health information.
 
-Analyze the provided system data and determine:
-1. Overall system status (operational, degraded, or down)
-2. Which services are affected
-3. Current incidents and their impact
-4. Recent deployments that might be related
-5. Known issues
+Analyze the provided system data and return a JSON response with this exact structure:
+{
+    "system_status": {
+        "overall": "operational" | "degraded" | "down",
+        "affected_services": ["service1", "service2", ...],
+        "current_incidents": [
+            {
+                "incident_id": "INC-123",
+                "description": "Brief description of the incident",
+                "impact": "Description of customer impact",
+                "estimated_resolution": "ISO datetime or null"
+            }
+        ]
+    },
+    "recent_deployments": ["deployment description 1", "deployment description 2", ...],
+    "known_issues": ["issue 1", "issue 2", ...]
+}
 
-Be precise and factual. Respond only with valid JSON."""
+Be precise and factual. Respond ONLY with valid JSON in the exact structure shown above."""
 
     async def _fetch_api_data(self, endpoint: str, params: Optional[Dict] = None) -> Dict:
         async with aiohttp.ClientSession() as session:
@@ -189,8 +200,18 @@ Determine the system status and extract relevant information."""
                     print(f"Raw response: {raw_text}")
                     return None
             
+            # Validate that we have the expected structure
+            if 'system_status' not in result_dict:
+                print(f"Invalid response structure: missing 'system_status' key. Response: {result_dict}")
+                return None
+                
+            system_status = result_dict['system_status']
+            if 'overall' not in system_status or 'affected_services' not in system_status:
+                print(f"Invalid system_status structure: missing required keys. Response: {result_dict}")
+                return None
+            
             incidents = []
-            for inc in result_dict.get('system_status', {}).get('current_incidents', []):
+            for inc in system_status.get('current_incidents', []):
                 est_resolution = None
                 if inc.get('estimated_resolution'):
                     try:
@@ -199,15 +220,15 @@ Determine the system status and extract relevant information."""
                         pass
                         
                 incidents.append(Incident(
-                    incident_id=inc['incident_id'],
-                    description=inc['description'],
-                    impact=inc['impact'],
+                    incident_id=inc.get('incident_id', 'UNKNOWN'),
+                    description=inc.get('description', 'No description'),
+                    impact=inc.get('impact', 'Unknown impact'),
                     estimated_resolution=est_resolution
                 ))
             
             return SystemStatusResult(
-                overall_status=SystemStatus(result_dict['system_status']['overall']),
-                affected_services=result_dict['system_status']['affected_services'],
+                overall_status=SystemStatus(system_status['overall']),
+                affected_services=system_status['affected_services'],
                 current_incidents=incidents,
                 recent_deployments=result_dict.get('recent_deployments', []),
                 known_issues=result_dict.get('known_issues', [])
