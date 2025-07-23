@@ -182,6 +182,12 @@ Determine the system status and extract relevant information."""
                 known_issues=result_dict.get('known_issues', [])
             )
             
+        except anthropic.BadRequestError as e:
+            if "credit balance is too low" in str(e):
+                print("Your Anthropic API credit balance is too low. Please add credits or enable mock mode in your .env file.")
+                return None
+            else:
+                raise
         except Exception as e:
             raise Exception(f"Failed to check system status: {str(e)}")
     
