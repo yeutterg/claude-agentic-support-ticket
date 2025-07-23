@@ -107,23 +107,29 @@ Ticket Content:
             if not hasattr(response, "content") or not response.content or not hasattr(response.content[0], "text"):
                 print(f"Empty or malformed response from Anthropic for model '{self.model}': {response}")
                 return None
+            raw_text = response.content[0].text
+            
+            # Try to parse JSON directly first
             try:
-                analysis_dict = json.loads(response.content[0].text)
-            except Exception as e:
-                # Try to strip code block markers and parse again
-                raw = response.content[0].text if response.content and hasattr(response.content[0], 'text') else response
-                if isinstance(raw, str) and raw.strip().startswith('```'):
-                    print("Anthropic response wrapped in code block, attempting to strip and parse again...")
-                    # Remove code block markers
-                    cleaned = re.sub(r'^```[a-zA-Z]*\\n?', '', raw.strip())
-                    cleaned = re.sub(r'```$', '', cleaned).strip()
-                    try:
-                        analysis_dict = json.loads(cleaned)
-                    except Exception as e2:
-                        print(f"Could not parse JSON from Anthropic response for model '{self.model}' even after stripping code block. Raw response: {raw}")
+                analysis_dict = json.loads(raw_text)
+            except json.JSONDecodeError:
+                # If direct parsing fails, try to extract JSON from code block
+                if '```' in raw_text:
+                    # Extract content between triple backticks
+                    match = re.search(r'```(?:json)?\s*\n?(.*?)\n?```', raw_text, re.DOTALL)
+                    if match:
+                        try:
+                            analysis_dict = json.loads(match.group(1).strip())
+                        except json.JSONDecodeError as e:
+                            print(f"Could not parse JSON from Anthropic response for model '{self.model}' even after extracting from code block. Error: {e}")
+                            print(f"Raw response: {raw_text}")
+                            return None
+                    else:
+                        print(f"Could not find JSON content in code block. Raw response: {raw_text}")
                         return None
                 else:
-                    print(f"Could not parse JSON from Anthropic response for model '{self.model}'. Raw response: {raw}")
+                    print(f"Could not parse JSON from Anthropic response for model '{self.model}'. Error: {e}")
+                    print(f"Raw response: {raw_text}")
                     return None
             
             return TicketAnalysis(
