@@ -464,13 +464,13 @@ The system includes a comprehensive test suite with 15 diverse test cases coveri
 
 ```bash
 # Run all test cases
-docker-compose -f docker-compose.test.yml run --rm test-all
+docker-compose run --rm customer-support-agent python test_all_cases.py
 
 # Run a single test case (e.g., test case #5)
-docker-compose -f docker-compose.test.yml run --rm test-single python test_single_case.py 5
+docker-compose run --rm customer-support-agent python test_single_case.py 5
 
 # Run interactive shell for debugging
-docker-compose -f docker-compose.test.yml run --rm test-interactive
+docker-compose run --rm customer-support-agent /bin/bash
 ```
 
 #### Method 3: Direct Docker Commands

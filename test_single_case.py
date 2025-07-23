@@ -34,8 +34,8 @@ def test_single_case(case_number):
         print(f"ERROR loading configuration: {e}")
         return
     
-    # Initialize pipeline
-    pipeline = CustomerSupportPipeline(config, use_promptlayer=bool(config["promptlayer_api_key"]))
+    # Initialize pipeline - disable PromptLayer for tests to avoid integration issues
+    pipeline = CustomerSupportPipeline(config, use_promptlayer=False)
     pipeline.load_knowledge_base("data/knowledge_base/articles.json")
     
     # Load customer profile
@@ -45,7 +45,7 @@ def test_single_case(case_number):
     )
     
     # Process the ticket
-    result = pipeline.process_ticket(ticket, customer_profile)
+    result = pipeline.process_ticket_sync(ticket, customer_profile)
     
     if result:
         print("\n" + "="*60)

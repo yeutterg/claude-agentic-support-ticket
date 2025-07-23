@@ -18,6 +18,8 @@ run_all_tests() {
         --env-file .env \
         -v "$(pwd)/data:/app/data" \
         -v "$(pwd)/.env:/app/.env:ro" \
+        -v "$(pwd)/test_all_cases.py:/app/test_all_cases.py:ro" \
+        -v "$(pwd)/test_single_case.py:/app/test_single_case.py:ro" \
         customer-support-agent \
         python test_all_cases.py
 }
@@ -30,6 +32,8 @@ run_single_test() {
         --env-file .env \
         -v "$(pwd)/data:/app/data" \
         -v "$(pwd)/.env:/app/.env:ro" \
+        -v "$(pwd)/test_all_cases.py:/app/test_all_cases.py:ro" \
+        -v "$(pwd)/test_single_case.py:/app/test_single_case.py:ro" \
         customer-support-agent \
         python test_single_case.py $case_num
 }

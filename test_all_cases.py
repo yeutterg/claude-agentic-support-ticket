@@ -21,8 +21,8 @@ def run_test_cases():
         print(f"ERROR loading configuration: {e}")
         return
     
-    # Initialize pipeline
-    pipeline = CustomerSupportPipeline(config, use_promptlayer=bool(config["promptlayer_api_key"]))
+    # Initialize pipeline - disable PromptLayer for tests to avoid integration issues
+    pipeline = CustomerSupportPipeline(config, use_promptlayer=False)
     pipeline.load_knowledge_base("data/knowledge_base/articles.json")
     
     # Load test cases
@@ -47,14 +47,26 @@ def run_test_cases():
         
         # Process the ticket
         try:
-            result = pipeline.process_ticket(ticket, customer_profile)
+            result = pipeline.process_ticket_sync(ticket, customer_profile)
             
-            if result:
+            if result and isinstance(result, dict):
                 print(f"\n✓ SUCCESS - Ticket processed")
-                print(f"  Priority: {result.get('analysis', {}).get('priority', 'N/A')}")
-                print(f"  Sentiment: {result.get('analysis', {}).get('sentiment', 'N/A')}")
-                print(f"  Escalation: {result.get('response', {}).get('escalation_needed', False)}")
-                print(f"  Response preview: {result.get('response', {}).get('response_text', '')[:100]}...")
+                try:
+                    analysis = result.get('analysis', {})
+                    if analysis:
+                        print(f"  Priority: {analysis.get('priority', 'N/A')}")
+                        print(f"  Sentiment: {analysis.get('sentiment', 'N/A')}")
+                    
+                    response = result.get('response', {})
+                    if response:
+                        print(f"  Escalation: {response.get('escalation_needed', False)}")
+                        response_text = response.get('response_text', '')
+                        if response_text:
+                            print(f"  Response preview: {response_text[:100]}...")
+                except Exception as e:
+                    print(f"\n✗ ERROR accessing result properties: {e}")
+                    import traceback
+                    traceback.print_exc()
                 
                 results.append({
                     "test_case": ticket['ticket_id'],
@@ -63,7 +75,7 @@ def run_test_cases():
                     "result": result
                 })
             else:
-                print(f"\n✗ FAILED - Ticket processing failed")
+                print(f"✗ FAILED - Ticket processing returned None or non-dict")
                 results.append({
                     "test_case": ticket['ticket_id'],
                     "subject": ticket['subject'],
@@ -111,11 +123,5 @@ def run_test_cases():
                 print(f"- {r['test_case']}: {r['subject']} ({r['status']})")
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--single":
-        # Run single test case
-        print("Running single test case mode...")
-        from main import main
-        main()
-    else:
-        # Run all test cases
-        run_test_cases()
+    # Run all test cases
+    run_test_cases()

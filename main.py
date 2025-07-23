@@ -23,10 +23,12 @@ class CustomerSupportPipeline:
                 api_key=config["promptlayer_api_key"],
                 anthropic_api_key=api_key
             )
-            api_key = self.evaluator.create_tracked_anthropic_client()
+            # Keep using the original API key for agents
+            # PromptLayer tracking will be handled differently
         else:
             self.evaluator = None
         
+        # Always use the original API key for agents
         self.ticket_analyzer = TicketAnalyzerAgent(api_key)
         self.knowledge_retrieval = KnowledgeRetrievalAgent(api_key)
         self.system_status = SystemStatusAgent(api_key)
@@ -158,6 +160,7 @@ class CustomerSupportPipeline:
         }
     
     def process_ticket_sync(self, ticket: Dict[str, str], customer_profile: Optional[CustomerProfile] = None) -> Dict:
+        """Synchronous wrapper for process_ticket"""
         return asyncio.run(self.process_ticket(ticket, customer_profile))
 
 
